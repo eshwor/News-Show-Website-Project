@@ -1,33 +1,33 @@
 <?php require_once("admin/includes/header.php"); ?>
-<?php 
-$target_dir = "admin/upload/";// image directory 
+<?php
+$target_dir = "admin/upload/";// image directory
 ?>
 <!DOCTYPE>
 <html>
 	<head>
 		<title>CodeGangProject</title>
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>	
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
 <style>
     body{
         display: none;
     }
-    
+
     #n,#e,#w,#s,#h,#o,#ws{
         display: none;
-    } 
+    }
     #content{
         display: none;
     }
 </style>
-<script>    
+<script>
 
    window.onload = function () {
     $('body').fadeIn(1000);
     $("#n,#e,#w,#s,#h,#o,#ws").slideDown(2000);
         $("#content").fadeIn(2000);
-    
-};  
-         
+
+};
+
  </script>
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
 
@@ -45,6 +45,9 @@ $target_dir = "admin/upload/";// image directory
 
 	</head>
 		<body>
+			<div class="">
+				<p>This is just the test div, you can delete it whenever you want</p>
+			</div>
 		<div id="fb-root"></div>
 <script>(function(d, s, id) {
   var js, fjs = d.getElementsByTagName(s)[0];
@@ -61,7 +64,7 @@ $target_dir = "admin/upload/";// image directory
 					<ul>
                     <li><a href=""  class="ancherLink">Home</a></li>
                     <li><a href="pages/technews.php" class="ancherLink">TechNews</a></li>
-                    <li><a href="pages/worldnews.php" class="ancherLink">WorldNews</a></li>	
+                    <li><a href="pages/worldnews.php" class="ancherLink">WorldNews</a></li>
                     <li><a href="pages/contact.php" class="ancherLink">Contact</a></li>
                 	</ul>
 				</nav>
@@ -69,17 +72,17 @@ $target_dir = "admin/upload/";// image directory
 			<div id="main">
 			    <div id="content">
                    <!--PHP code start to pull the data from the database-->
-						
-				<?php                     
+
+				<?php
               $query = "SELECT * FROM technews ORDER BY RAND() LIMIT 0,6 ";
-              $selectQuery = mysqli_query ($connection, $query);  
+              $selectQuery = mysqli_query ($connection, $query);
                 $count = mysqli_num_rows($selectQuery);
-            
+
               if(!$selectQuery){
               die("Query Failed!!" . mysqli_error($connection));
             }
-            
-                    
+
+
                 while($rows = mysqli_fetch_assoc($selectQuery)){
                         $db_id = $rows['id'];
                         $db_technewsTitle = $rows['technewstitle'];
@@ -88,7 +91,7 @@ $target_dir = "admin/upload/";// image directory
                         $db_technewsImages = $rows['technewsimages'];
                         $db_technewsContent = $rows['technewscontent'];
                 ?>
-    
+
        <article class="article1">
         <header class="articleHeader">
             <h2 class="title"><a href="pages/technews.php"><?php echo $db_technewsTitle; ?></a></h2>
@@ -100,33 +103,33 @@ $target_dir = "admin/upload/";// image directory
             if(file_exists($displayImage)){
                 echo "<img src='{$displayImage}' width='250' height='220'>";
             }else{
-               
+
             }
-                    
-              ?>  
-          </div> 
-             <?php 
+
+              ?>
+          </div>
+             <?php
                   $getStringLength = strlen($db_technewsContent);
-                   
+
                 if($getStringLength > 200 ){
                    echo substr($db_technewsContent,0,200)."                                  ....<a href='pages/worldnews.php' style='color:coral;'>ReadMore</a>";
                 }
                 else{
                     echo $db_technewsContent;
-                }  
+                }
                       ?>
-          
+
 					</article>
-			
+
 				<?php  }  ?>
 				<?php
-              $query = "SELECT * FROM worldnews ORDER BY RAND() LIMIT 0,6 "; 
-              $selectQuery = mysqli_query ($connection, $query);   
+              $query = "SELECT * FROM worldnews ORDER BY RAND() LIMIT 0,6 ";
+              $selectQuery = mysqli_query ($connection, $query);
               if(!$selectQuery){
               die("Query Failed!!" . mysqli_error($connection));
             }
-            
-                    
+
+
                  while($rows = mysqli_fetch_assoc($selectQuery)){
                         $db_id = $rows['id'];
                         $db_worldnewsTitle = $rows['worldnewstitle'];
@@ -135,7 +138,7 @@ $target_dir = "admin/upload/";// image directory
                         $db_worldnewsImages = $rows['worldnewsimages'];
                         $db_worldnewsContent = $rows['worldnewscontent'];
                 ?>
-    
+
        <article class="article1">
         <header class="articleHeader">
             <h2 class="title"><a href="pages/worldnews.php"><?php echo $db_worldnewsTitle; ?></a></h2>
@@ -147,50 +150,47 @@ $target_dir = "admin/upload/";// image directory
             if(file_exists($displayImage)){
                 echo "<img src='{$displayImage}' width='250' height='220'>";
             }else{
-               
-            }
-                    
-              ?>  
-          </div> 
 
-             <?php 
+            }
+
+              ?>
+          </div>
+
+             <?php
                 $getStringLength = strlen($db_worldnewsContent);
-                   
+
                 if($getStringLength > 200){
                    echo substr($db_worldnewsContent,0,200)."                                        ....<a href='pages/worldnews.php' style='color:coral;'>ReadMore</a>";
                 }
                 else{
                     echo $db_worldnewsContent;
-                }  
+                }
                 ?>
                 </article>
-			
+
 				<?php  }  ?>
-               
+
 <!--display worldnews-->
-              
-               
+
+
                 <?php
         if(mysqli_num_rows($selectQuery) <= 0){
             echo "<b>"."Data is empty, please add some data and try again!"."</b>";
-            
+
         }
         ?>
-                </div>	
-			    
-<?php 
+                </div>
+
+<?php
     include("pages/sidebar.php");//sidebar link
  ?>
-				
+
 			</div>
 			<footer style="height:200px;">
 			<p>Copyright&copy;<?php echo date("Y"); ?> || New<b>S</b>howProgram</p>
 			<span style="padding:10px; margin-left:10px;"><div style="background:#FFFFFF; padding:10px;" class="fb-like" data-href="http://newshowprogram.com" data-layout="standard" data-action="like" data-size="small" data-show-faces="true" data-share="true"></div></span>
 			</footer>
 		</div>
-			
+
 	</body>
 </html>
-
-
-
